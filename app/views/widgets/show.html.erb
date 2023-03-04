@@ -34,13 +34,19 @@
       window.authToken = '<%= @token %>'
       window.globalConfig = <%= raw @global_config.to_json %>
 
-      window.chatwootWebChannel['replyTime'] = '';
       const conversationButtonInterval = setInterval(() => {
-      const conversationButtons = document.querySelectorAll('button');
-      conversationButtons.forEach(button => {
+        const conversationButtons = document.querySelectorAll('button');
+        conversationButtons.forEach(button => {
           if (button.textContent.includes('conversation')) {
-              clearInterval(conversationButtonInterval);
-              button.click();
+            clearInterval(conversationButtonInterval);
+            button.click();
+
+            divs = document.querySelectorAll('header div');
+            divs.forEach(div => {
+              if (div.innerText.includes('Typically replies') && div.childNodes.length == 1) {
+                 div.style.display = 'none';
+               }
+            });
           }
         });
       }, 300);
